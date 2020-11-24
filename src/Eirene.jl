@@ -7681,29 +7681,6 @@ function suspend(rv,cp,fv;degree=1)
 end
 
 
-function 	nr2ss(numrad)
-	if 		numrad 	== 	1
-		ss	= 	100
-	elseif numrad 	== 	10
-		ss 	= 	10
-	elseif 	numrad 	== 	Inf
-		ss 	= 	1
-	else
-		println()
-		println("error: <nr2ss> only takes arguments 1, 10, and 0")
-		println("argument passed was: $(numrad)")
-	end
-	return ss
-end
-
-function NUMRAD2numrad(NUMRAD)
-	if NUMRAD == 0
-		numrad 	= 	Inf
-	else
-		numrad 	= 	NUMRAD
-	end
-	return numrad
-end
 
 
 ###### Adding Wasserstein distances between persistence diagrams ##########
