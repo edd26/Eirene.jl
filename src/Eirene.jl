@@ -7269,9 +7269,6 @@ function firstbcdiff(A,B;maxdim=1,offset=0) # stands for first barcode differenc
 	return 0
 end
 
-function 	colwised(x)
-	return	Distances.pairwise(Euclidean(),x,dims=2)
-end
 
 
 function 	offdiagmin(d::Array{Tv}) where Tv

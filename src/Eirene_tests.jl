@@ -842,5 +842,8 @@ function iudsymmat(m)
 end
 
 
+function 	colwised(x)
+	return	Distances.pairwise(Euclidean(),x,dims=2)
+end
 
 
