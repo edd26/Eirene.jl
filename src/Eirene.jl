@@ -7355,31 +7355,6 @@ function vrmat(C::Dict)
 	return 				s
 end
 
-function vertexlifemat(d;model="rand",scale=1/2)
-	if 		model 	== 	"pc"
-		s 	= 	colwised(d)
-	elseif model 	== 	"vr"
-		s 	= 	copy(d)
-	elseif model 	== 	"rand"
-		s 	= 	iudsymmat(d)
-	end
-	v 		= 	offdiagmin(s)
-	if typeof(scale) <: Number
-		for	p 	= 	1:size(s,2)
-			s[p,p]	= 	v[p]*scale
-		end
-	elseif 	scale == "rand"
-		for p 	= 	1:size(s,2)
-			r 		= 	rand(1)
-			s[p,p] 	=   r[1]*v[p]
-		end
-	else
-		println()
-		println("error: scale must be either a scalar or the string \"rand\"")
-		return
- 	end
-	return 	s
-end
 
 function ceil2grid(M;origin=0,stepsize=1,numsteps=Inf)
 	if 	stepsize 	<  	0
@@ -7406,12 +7381,6 @@ function ceil2grid(M;origin=0,stepsize=1,numsteps=Inf)
 	end
 	return 			N
 end
-
-
-
-
-
-
 
 ###### Adding Wasserstein distances between persistence diagrams ##########
 
