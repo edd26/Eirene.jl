@@ -6862,13 +6862,6 @@ function persistencestats(x)
 	return A
 end
 
-function persistencemultistats(x;numtrials = 10)
-	trials = Array{Any,1}(numtrials)
-	for i = 1:numtrials
-		trials[i] = persistencestats(x)
-	end
-	return trials
-end
 
 
 
