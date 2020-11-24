@@ -6414,20 +6414,6 @@ function saveface(ct::Array{Int64,1},kk::Int64,colsum::Array{Int64,1},farfilt::I
 	return keep
 end
 
-function savefacespecial(ct::Array{Int64,1},kk::Int64,colsum::Array{Int64,1},farfilt::Int64,oldclaw::Array{Int64,1},rt::Array{Int64,1},zt::Array{Int64,1})
-	keep = true
-	for l = ct[kk]:colsum[kk]
-		if  zt[l]>= farfilt && oldclaw[rt[l]]>=farfilt
-			keep = false
-			println(["rt[l]" rt[l]])
-			break
-		end
-	end
-	if keep
-		println("kept")
-	end
-	return keep
-end
 
 function processfpi!(pmhist::Array{Int64,2},fpi::Array{Int64,2},jcp::Array{Int64,1},jrv::Array{Int64,1},ff2pv::Array{Int64,1},m::Integer)
 	for p = 1:m

@@ -513,3 +513,19 @@ function eirene_batchcsv(
 		JLD.save(savepath,"C",C)
 	end
 end
+
+function savefacespecial(ct::Array{Int64,1},kk::Int64,colsum::Array{Int64,1},farfilt::Int64,oldclaw::Array{Int64,1},rt::Array{Int64,1},zt::Array{Int64,1})
+	keep = true
+	for l = ct[kk]:colsum[kk]
+		if  zt[l]>= farfilt && oldclaw[rt[l]]>=farfilt
+			keep = false
+			println(["rt[l]" rt[l]])
+			break
+		end
+	end
+	if keep
+		println("kept")
+	end
+	return keep
+end
+
