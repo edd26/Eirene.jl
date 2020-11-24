@@ -277,3 +277,19 @@ function modit2filepath(model,iteration)
 	suffix 	= 	string("testdata/",model,"/",model,"$(iteration)_input.csv")
 	joinpath(@__DIR__,suffix)
 end
+
+
+function diagonalentries(x)
+	if 	size(x,1) != size(x,2)
+		println()
+		println("error: d should be square")
+		return
+	end
+	m 			= 	size(x,2)
+	v 			= 	zeros(m)
+	for 	p 	= 	1:m
+		v[p]	= 	x[p,p]
+	end
+	return 		v
+end
+

@@ -7273,19 +7273,6 @@ function 	colwised(x)
 	return	Distances.pairwise(Euclidean(),x,dims=2)
 end
 
-function 	diagonalentries(x)
-	if 	size(x,1) != size(x,2)
-		println()
-		println("error: d should be square")
-		return
-	end
-	m 			= 	size(x,2)
-	v 			= 	zeros(m)
-	for 	p 	= 	1:m
-		v[p]	= 	x[p,p]
-	end
-	return 		v
-end
 
 function 	offdiagmin(d::Array{Tv}) where Tv
 	if 	size(d,1) != size(d,2)
@@ -7301,9 +7288,6 @@ function 	offdiagmin(d::Array{Tv}) where Tv
 	end
 	return 	v
 end
-
-
-
 
 function ceil2grid(M;origin=0,stepsize=1,numsteps=Inf)
 	if 	stepsize 	<  	0
