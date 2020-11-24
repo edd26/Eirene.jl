@@ -911,3 +911,25 @@ function generatorbdc(C;dim=0)
 	return passedtest
 end
 
+function ceilvr(	N;
+					minrad 			= 	-Inf,
+					maxrad 			= 	Inf,
+					numrad 			= 	Inf)
+
+	if minrad 						== 	"minedge"
+		minrad 						= 	minimum(offdiagmin(N))
+	end
+
+	minrad,maxrad,mingrid,maxgrid 	= 	ceil2grid_overflowparameters(
+										N,
+										minrad 	= 	minrad,
+										maxrad 	= 	maxrad)
+					S 				= 	ceil2grid_overflow(
+										N,
+										minrad 	= 	minrad,
+										maxrad 	= 	maxrad,
+										mingrid = 	mingrid,
+										maxgrid = 	maxgrid,
+										numgrid = 	numrad)
+	return S
+end

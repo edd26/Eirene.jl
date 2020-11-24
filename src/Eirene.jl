@@ -7165,28 +7165,6 @@ function makegrid(mingrid,maxgrid,numrad)
 end
 
 
-function ceilvr(	N;
-					minrad 			= 	-Inf,
-					maxrad 			= 	Inf,
-					numrad 			= 	Inf)
-
-	if minrad 						== 	"minedge"
-		minrad 						= 	minimum(offdiagmin(N))
-	end
-
-	minrad,maxrad,mingrid,maxgrid 	= 	ceil2grid_overflowparameters(
-										N,
-										minrad 	= 	minrad,
-										maxrad 	= 	maxrad)
-					S 				= 	ceil2grid_overflow(
-										N,
-										minrad 	= 	minrad,
-										maxrad 	= 	maxrad,
-										mingrid = 	mingrid,
-										maxgrid = 	maxgrid,
-										numgrid = 	numrad)
-	return S
-end
 
 function 	offdiagmin(d::Array{Tv}) where Tv
 	if 	size(d,1) != size(d,2)
