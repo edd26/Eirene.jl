@@ -469,3 +469,47 @@ function persistencemultistats(x;numtrials = 10)
 	end
 	return trials
 end
+
+
+
+
+##########################################################################################
+
+####	BATCH OPERATIONS
+
+##########################################################################################
+
+function eirene_batchcsv(
+	inputdirectory,
+	outputdirectory;
+	maxdim = 1,
+	model="dmat",
+	entryformat="textfile",
+	lowerlim=-Inf,
+	upperlim=Inf,
+	numrad=Inf,
+	fastop=true,
+	record="cyclerep",
+	pointlabels=[],
+	verbose=false)
+
+	filenames = readdir(inputdirectory)
+
+	for i = 2:length(filenames)
+		filename = filenames[i]
+		filepath = "$(inputdirectory)/$(filename)"
+		C = eirene(CSV.read(filepath),
+				maxdim 		=maxdim,
+				model		=model,
+				entryformat	=entryformat,
+				lowerlim	=lowerlim,
+				upperlim	=upperlim,
+				numrad		=numrad,
+				fastop		=fastop,
+				record		=record,
+				pointlabels	=pointlabels,
+				verbose		=verbose)
+		savepath = "$(outputdirectory)/$(filename).jld"
+		JLD.save(savepath,"C",C)
+	end
+end
