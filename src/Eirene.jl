@@ -6835,32 +6835,6 @@ function eirene(   	;
 	return D
 end
 
-##########################################################################################
-
-####	TESTING AND DIAGNOSTICS // FUNCTIONWISE
-
-##########################################################################################
-
-function persistencestats(x)
-	L = length(x)
-	A = Array{Float64}(undef,8,L)
-	for ip = 1:L
-		i = x[ip]
-		pcloud = rand(20,i)
-		res = @timed persistf2vr(pcloud,5,model = "pc",fastop=false,record="all")
-  		D = res[1]
-   		t = res[2]
-		A[1,ip] = length(D["prepairs"][5])
-		A[2,ip] = length(D["farfaces"][5])
-		A[3,ip] = binom(i-1,4)
-		A[4,ip] = length(D["trv"][5])
-		A[5,ip] = t
-		A[6,ip] = i
-		A[7,ip] = length(D["farfaces"][5]) - length(D["prepairs"][5]) / binom(i-1,4)
-		A[8,ip] = length(D["trv"][5]) / binom(i-1,4)
-	end
-	return A
-end
 
 
 
