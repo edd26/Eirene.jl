@@ -6939,41 +6939,6 @@ function cellcheck()
 	return c
 end
 
-##########################################################################################
-
-####	BENCHMARKS
-
-##########################################################################################
-
-function roadmapbenchmarks(benchmarkdirectory)
-	names 	= 	[
-				"celegans_weighted_undirected_reindexed_for_matlab_maxdist_2.6429_SP_distmat.txt",
-				"klein_bottle_pointcloud_new_400.txt_distmat.txt",
-				"HIV1_2011.all.nt.concat.fa_hdm.txt",
-				# "dragon_vrip.ply.txt_2000_.txt_distmat.txt",
-				# "random_point_cloud_50_16_.txt_distmat.txt",
-				"fractal_9_5_2_random_edge_list.txt_0.19795_distmat.txt"
-				]
-	dims  	=	Dict(
-				"celegans_weighted_undirected_reindexed_for_matlab_maxdist_2.6429_SP_distmat.txt" => 1,
-				"klein_bottle_pointcloud_new_400.txt_distmat.txt" =>1,
-				"HIV1_2011.all.nt.concat.fa_hdm.txt" =>1,
-				"dragon_vrip.ply.txt_2000_.txt_distmat.txt" =>1,
-				"random_point_cloud_50_16_.txt_distmat.txt" =>7,
-				"fractal_9_5_2_random_edge_list.txt_0.19795_distmat.txt"=>2
-				)
-	# precompile
-	C 				= 	eirene(rand(10,10),model="pc")
-	C 				= 	eirene(rand(10,10),model="pc",maxdim=3)
-	for name in names
-		println(name)
-		fp 			= 	benchmarkdirectory*"/"*name
-		x 			= 	readdlm(fp)
-		x 			= 	(x+x')/2
-		@time 	eirene(x,model="vr",maxdim=dims[name])
-	end
-end
-
 
 function checkdv(rv_ag,cp_ag,dv)
 	for p 				=	1:length(cp_ag)-1
