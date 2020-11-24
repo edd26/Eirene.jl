@@ -4166,22 +4166,6 @@ function integersinsameorderbycolumn2(v::Array{Int64,1},colptr)
 	return z
 end
 
-#=
-- 	In beta; should compare with integersinsameorderbycolumn2. See
-	/Users/greghenselman/Google Drive/GregDirectory/julia_gd/Julia/workshop/workshop_Oct2017.jl
-- 	Functionally equivalent to integersinsameorderbycolumn; returns a
-	permutation z on {1,...,length(v)} so that
-	- cran(colptr,j) maps to cran(colptr,j) for all j, and
-	- crows(colptr,v[z],j) is an array in sorted order
-=#
-function integersinsameorderbycolumn3(v::Array{Int64,1},colptr)
-	numcols = length(colptr)-1
-	z 	    = Array{Int64}(undef,length(v))
-	for i = 1:numcols
-		z[cran(colptr,i)] = colptr[i]-1+integersinsameorder(crows(colptr,v,i))
-	end
-	return z
-end
 
 
 ##########################################################################################
