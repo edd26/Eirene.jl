@@ -7648,37 +7648,6 @@ function modit2filepath(model,iteration)
 end
 
 
-function solutionkey(		;
-				model 		= 	"complex",
-				maxrad 		= 	Inf,
-				numrad		= 	Inf,
-				space		= 	"sphere",
-				problemset 	= 	"hand")
-	if 	problemset 			== 	"hand"
-		solkey 		= 	string(
-						"mod",model,
-						"mar",string(maxrad),
-						"nr",string(numrad),
-						"it",string(space))
-	end
-	return solkey
-end
-
-function suspend!(rv,cp,fv;degree=1)
-	F 	= 	fill(Array{Int64,1}(undef,0),degree)
-	v   = 	fill([1],degree)
-	prepend!(rv,F)
-	prepend!(cp,v)
-	prepend!(fv,F)
-end
-
-function suspend(rv,cp,fv;degree=1)
-	rv 			= 	copy(rv)
-	cp 			= 	copy(cp)
-	fv 			= 	copy(fv)
-					suspend!(rv,cp,fv,degree=degree)
-	return 			rv,cp,fv
-end
 
 
 
