@@ -7204,38 +7204,6 @@ end
 
 
 
-function generatorbdc(C;dim=0)
-	# bdc stands for birth, death, cycle status
-	passedtest 		= 	true
-	maxdim 			= 	C["input"]["maxdim"]
-	B 				= 	barcode(C,dim=dim)
-	if C["input"]["record"] == 	"all"
-		for p 		= 	1:size(B,1)
-			rep 	= 	classrep(C,dim=dim,class=p,format="index")
-			case1 	= 	birthtime(C,dim=dim,chain=rep) == B[p,1]
-			case2 	= 	deathtime(C,dim=dim,chain=rep) == B[p,2]
-			case3 	= 	isempty(chainboundary(C,dim=dim,chain=rep))
-			if 		! 	(case1 & case2 & case3)
-				println([case1 case2 case3])
-				println(rep)
-				println([birthtime(C,dim=dim,chain=rep) B[p,1]])
-				println([deathtime(C,dim=dim,chain=rep) B[p,2]])
-				passedtest 	= 	false
-				break
-			end
-		end
-	else
-		println()
-		println("error in function <generatorbdc>: deathtimes can only be checked when C[\"input\"][\"record\"] = \"all\".")
-		return
-	end
-	return passedtest
-end
-
-
-
-
-
 
 function 	offdiagmin(d::Array{Tv}) where Tv
 	if 	size(d,1) != size(d,2)
