@@ -4288,15 +4288,6 @@ function integersinsameorderbycolumn3(v::Array{Int64,1},colptr)
 	return z
 end
 
-function integersortperm(v::Array{Int64,1},maxradue::Int64)
-	l = length(v)
-	u = integersinsameorder(v)
-	w = Array{Int64}(undef,l)
-	for i = 1:l
-		w[u[i]] = i
-	end
-	return w
-end
 
 ##########################################################################################
 
