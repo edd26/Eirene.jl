@@ -4178,24 +4178,6 @@ function integersinoppositeorder_nonunique(v)
 	return u
 end
 
-function integersinoppositeorder_nonunique_test()
-	## diagnostic test to ensure integersinoppositeorder_nonunique worksp properly
-	for i = 1:100
-		v = rand(10000)
-		u = unique(v)
-		u = sort(u)
-		u = reverse(u,dims=1)
-		l = length(v)
-		w = Array{Int64}(undef,l)
-		for i = 1:l
-			w[i] = findfirst(u,v[i])
-		end
-		if w!=integersinoppositeorder_nonunique(v)
-			print("hmmm")
-			return
-		end
-	end
-end
 
 function integersinsameorderbycolumn(v::Array{Int64,1},maxradue::Int64,colptr)
 	# Returns a permutation z on {1,...,length(v)} so that
