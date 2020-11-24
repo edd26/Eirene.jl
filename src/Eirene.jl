@@ -7302,15 +7302,6 @@ function 	offdiagmin(d::Array{Tv}) where Tv
 	return 	v
 end
 
-function 	iudsymmat(m)
-	x	= 	rand(m,m)
-	for p 	= 	1:m
-		for 	q 	= 	1:p-1
-			x[q,p] 	= 	x[p,q]
-		end
-	end
-	return x
-end
 
 
 
