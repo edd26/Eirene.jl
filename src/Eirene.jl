@@ -7040,19 +7040,6 @@ saveloadfiledata
 =#
 
 
-function comparebarcodesagainstcomplex(C)
-	rv,cp 		= 	boundarymatrices(C)
-	fv 			= 	ocff2of(C["grain"],C["ocg2rad"])
-	maxdim 		= 	C["input"]["maxdim"]
-	Ccx		 	= 	eirene(rv=rv,cp=cp,fv=fv,model = "complex",maxdim=maxdim)
-
-	i,j 		= 	firstbcdiff([C Ccx],maxdim=maxdim)
-	if 	i 			!= 	0
-		return 	 	Cvr, Ccx, i
-	else
-		return 		[]
-	end
-end
 
 function checkdv(rv_ag,cp_ag,dv)
 	for p 				=	1:length(cp_ag)-1
@@ -7247,27 +7234,6 @@ end
 
 
 
-function firstbcdiff(arrayofdicts;maxdim=1,offset=0) # stands for first barcode difference
-	A 					= 	arrayofdicts
-	for p 				= 	2:length(A)
-		q 				= 	firstbcdiff(A[1],A[p],maxdim=maxdim,offset=offset)
-		if 	q 			> 	0
-			return p,q
-		end
-	end
-	return 0,0
-end
-
-function firstbcdiff(A,B;maxdim=1,offset=0) # stands for first barcode difference
-	for	r 			= 		0:maxdim
-		Ba 			= 		sortslices(barcode(A,dim=r),		dims=1)
-		Bb 			= 		sortslices(barcode(B,dim=r+offset),	dims=1)
-		if 	Ba 		!= 		Bb
-			return 	r
-		end
-	end
-	return 0
-end
 
 
 
