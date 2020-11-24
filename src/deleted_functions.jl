@@ -293,3 +293,18 @@ function diagonalentries(x)
 	return 		v
 end
 
+function ceil2grid_overflow( 	N;
+								minrad 		=	-Inf,
+								maxrad		=	Inf,
+								mingrid 	= 	Inf,
+								maxgrid 	= 	Inf,
+								numgrid 	= 	Inf
+								)
+	S 							= 	truncatearray(N,minrad,maxrad)
+	fi 							= 	findall(isfinite,S) # stands for finite indices
+	fv 							= 	S[fi]
+	ran 						= 	makegrid(mingrid,maxgrid,numgrid)
+	S[fi] 						= 	ceil2grid(fv,ran)
+	return S
+end
+
