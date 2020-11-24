@@ -237,39 +237,6 @@ function buildclosefromclose(lrowval,lcolptr,lclosefaces,hrowval,hcolptr;facecar
 	end
 end
 
-################################################################################
-	# 	BEGIN: The following two functions appear to be unused as of 2019-02-05.
-################################################################################
-#
-#	NB: OUTSTANDING  ISSUES:
-#		(1)	undeclared variable m (in buildclosefromclose_subr)
-#		(2) undeclared variable columnsupp (in buildclosefromclose_subr)
-#		(3) undeclared variable rowettacol (should be rowettacol, passed as arg in buildclosefromclose_subr_subr)?)
-#
-# function buildclosefromclose_subr(rosettacol::Array{Int64,1},lrowval::Array{Int64,1},lcolptr::Array{Int64,1},hrowval::Array{Int64,1},hcolptr::Array{Int64,1},hclosefaces::Array{Int64,1},columnmarker::Int64,rowdepth::Integer)
-# 	for i = 1:m
-# 		rosettacol[lrowval[cran(lcolptr,i)]]=cran(lcolptr,i)
-# 		for j = cran(hcolptr,i)
-# 			if columnsupp[j]
-# 				columnmarker+=1
-# 				farface = hrowval[j]
-# 				buildclosefromclose_subr_subr(rowdepth::Integer,hclosefaces::Array{Int64,1},columnmarker::Int64,rowettacol::Array{Int64,1},lclosefaces::Array{Int64,1},farface::Int64)
-# 				hclosefaces[sd,columnmarker] = rosettacol[lrowval[farface]]
-# 			end
-# 		end
-# 	end
-# end
-#
-# function buildclosefromclose_subr_subr(rowdepth::Integer,hclosefaces::Array{Int64,1},columnmarker::Int64,rowettacol::Array{Int64,1},lclosefaces::Array{Int64,1},farface::Int64)
-# 	for k = 1:rowdepth
-# 		hclosefaces[k,columnmarker]=rosettacol[lclosefaces[k,farface]]
-# 	end
-# end
-#
-################################################################################
-	# 	END: The following two functions appear to be unused as of 2019-02-05.
-################################################################################
-
 function buildallfromclose(lrowval,lcolptr,lclosefaces,hrowval,hcolptr,selectedcolumnindices;verbose=false)
 	if verbose
 		println("PLEASE NOTE: COLUMNS MUST BE IN SORTED ORDER FOR THIS TO WORK PROPERLY")
