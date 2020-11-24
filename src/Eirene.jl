@@ -3883,73 +3883,6 @@ function checktrueordercanonicalform(numits)
 	return []
 end
 
-################################################################################
-	# 	BEGIN: The following two functions appear to be unused as of 2018-04-15.
-################################################################################
-# function fv2ocff_1(	fv=fv,
-# 					dp=dp,
-# 					minrad=minrad,
-# 					maxrad=maxrad,
-# 					numrad=numrad)
-#
-# 	complexdim 		= 	p -> length(fv[p])
-# 	maxsd 		= 	maxdim+2
-#
-# 	### Format the grain data
-# 	# Concatenate the grain vectors
-# 	numcells 		= 	0
-# 	for p 			= 	1:maxsd
-# 	numcells   += 	complexdim(p)
-# 	end
-# 	filt1 = Array{Float64}(undef,numcells)
-# 	numcells = 0
-# 	for p 								= 	1:maxsd
-# 	l 								= 	complexdim(p)
-# 	filt1[numcells+1:numcells+l] 	= 	fv[p]
-# 	numcells   					   += 	l
-# 	end
-#
-# 	# Convert to order canonical form
-# 	filt2 = integersinoppositeorder_nonunique(filt1)
-# 	ocff = fill(Array{Int64}(undef,0),maxsd+3)
-# 	numcells = 0
-# 	for i = 1:maxsd
-# 	l = length(fv[i])
-# 	ocff[i] = filt2[numcells+1:numcells+l]
-# 	numcells += l
-# 	end
-#
-# 	# Compute the grain translator
-# 	ocg2rad = sort(unique(filt1))
-# 	ocg2rad = reverse(ocg2rad,dims=1)
-# end
-#
-# function fv2ocff_2(	fv=fv,
-# 					dp=dp,
-# 					minrad=minrad,
-# 					maxrad=maxrad,
-# 					numrad=numrad)
-#
-# 	if 	typeof(fv) <= Array{Float64}
-# 		fvo 	= 	copy(fv)
-# 	else
-# 		fvo 	= 	cat(1,fv...)
-# 	end
-#
-# 	fvo 	= 	minmaxceil!( 	fvo,
-# 								minrad=minrad,
-# 								maxrad=maxrad,
-# 								numrad=numrad)
-#
-# 	ocg,ocg2rad 	= 	trueordercanonicalform(fvo,factor=true)
-# 	ocg 			= 	maximum(ocg)+1-ocg
-# 	ocg2rad			= 	reverse(ocg2rad,dims=1)
-#
-# end
-################################################################################
-	# 	END: The following two functions appear to be unused as of 2018-04-15.
-################################################################################
-
 function checkoffdiagmean(numits)
 	for p = 1:numits
 		numpts 	= 	rand(50:100,1)
@@ -4156,26 +4089,6 @@ function integersinsameorder!(v::Array{Int64,1})
 			x[u-minv]+=1
 		end
 	end
-end
-
-function integersinoppositeorder_nonunique(v)
-	if isempty(v)
-		return Array{Int64,1}(undef,0)
-	end
-	p 			= sortperm(v,alg=MergeSort)
-	u 			= Array{Int64}(undef,length(v))
-	epsilon 	= v[p[end]]
-	c			= 1
-	for i = length(v):-1:1
-		if v[p[i]] == epsilon
-			u[p[i]] = c
-		else
-			c+=1
-			u[p[i]] = c
-			epsilon = v[p[i]]
-		end
-	end
-	return u
 end
 
 
