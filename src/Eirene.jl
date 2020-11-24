@@ -7264,62 +7264,6 @@ function checkdv(rv_ag,cp_ag,dv)
 	return []
 end
 
-function saveperseustestdata()
-	E 					= 	generateperseusvrdata()
-	filepath			= 	testfp("prsjd")
-	JLD.save(filepath,"E",E)
-end
-
-
-function generateperseusvrdata()
-	numits 				= 	1
-	ambdim 				= 	40
-	maxdim 				= 	2
-	numsteps 			= 	10000
-	minrad 				= 	0
-	stepsize 			= 	1
-	calibrationdata 	= 	Array{Any}(undef,numits)
-
-	for p 	= 	1:numits
-		numpts 			= 	rand(50:70,1)
-		numpts 			= 	numpts[1]
-		vrmat 			= 	vertexlifemat(	numpts,
-											model 		= 	"rand",
-											scale 		= 	0) # we want zeros on the diagonal
-		vrmat 			= 	ceil2grid(		vrmat*numsteps;
-											origin=minrad,
-											stepsize=stepsize,
-											numsteps=numsteps)
-
-		# birthtimes 		= 	birthtimesraw./2
-
-		D 				=
-		perseusjl(
-		vrmat;			# 	filepaths should end with .txt
-		model			= 	"vr",
-		# rowsare 		= 	"dimensions",
-		datapath		= 	testfp("prsip"),
-		outpath			= 	testfp("prsop"),
-		maxdim 			= 	maxdim,
-		minrad			= 	minrad,
-		stepsz			= 	stepsize,
-		nsteps			= 	numsteps,
-		# pointbirths		= 	birthtimes,
-		perseusfilepath = 	"/Users/gh10/a/c/j/gdc_agora/gdc_a_peresuswrappers/perseusMac"
-		)
-
-		E 				= 	Dict(
-							"perseusdict" 	=>	D,
-							# "pcloud" 		=>	pcloud,
-							"minrad"		=> 	minrad,
-							"stepsize"		=> 	stepsize,
-							"maxdim" 		=>  maxdim,
-							"vrmat"			=>  vrmat)
-
-		calibrationdata[p] 					= 	E
-	end
-	return calibrationdata
-end
 
 
 function eulervector2dimensionpattern(ev)
@@ -7616,7 +7560,7 @@ function vertexlifemat(d;model="rand",scale=1/2)
 	return 	s
 end
 
-function 	ceil2grid(M;origin=0,stepsize=1,numsteps=Inf)
+function ceil2grid(M;origin=0,stepsize=1,numsteps=Inf)
 	if 	stepsize 	<  	0
 		println()
 		println("error in function <roundentries>: stepsize must be positive")
@@ -7642,10 +7586,6 @@ function 	ceil2grid(M;origin=0,stepsize=1,numsteps=Inf)
 	return 			N
 end
 
-function modit2filepath(model,iteration)
-	suffix 	= 	string("testdata/",model,"/",model,"$(iteration)_input.csv")
-	joinpath(@__DIR__,suffix)
-end
 
 
 
