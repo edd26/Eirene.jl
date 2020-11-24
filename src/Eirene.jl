@@ -7039,27 +7039,6 @@ saveloadfiledata
 
 =#
 
-function testfp(s)
-	D 	= 	Dict(
-			"prsip" => joinpath(@__DIR__,"perseus/reservoir/input.txt"),
-			"prsop" => joinpath(@__DIR__,"perseus/reservoir/output"),
-			"prsjd" => joinpath(@__DIR__,"test/perseus/testdata.jld"), # peresus julian data
-			"hantx" => joinpath(@__DIR__,"test/handcalc/testdata.txt"),
-			"hanjd" => joinpath(@__DIR__,"test/handcalc/testdata.jld"),
-			"hsphr" => joinpath(@__DIR__,"test/handcalc/sphere.csv"),
-			"hempt" => joinpath(@__DIR__,"test/handcalc/empty.csv"),
-			"hstri" => joinpath(@__DIR__,"test/handcalc/skrabatriangle.csv"),
-			"vrmat" => joinpath(@__DIR__,"test/fileload/vrmat.txt"), # vietoris rips
-			"csvdp" => joinpath(@__DIR__,"test/fileload/cell_dp.csv"),
-			"csvdv" => joinpath(@__DIR__,"test/fileload/cell_dv.csv"),
-			"csvev" => joinpath(@__DIR__,"test/fileload/cell_ev.csv"),
-			"csvsp" => joinpath(@__DIR__,"test/fileload/cell_sm.csv"),
-			"csvvr" => joinpath(@__DIR__,"test/fileload/vr.csv"),
-			"csvpc" => joinpath(@__DIR__,"test/fileload/pc.csv"),
-			)
-	return  D[s]
-end
-
 
 function comparebarcodesagainstcomplex(C)
 	rv,cp 		= 	boundarymatrices(C)
@@ -7333,27 +7312,6 @@ function 	iudsymmat(m)
 	return x
 end
 
-function vrmat(C::Dict)
-	if C["input"]["model"] != "vr"
-		println()
-		println("error: <vrmat> only applies to vietoris-rips complexes")
-	end
-	nvl2ovl 			= 	C["nvl2ovl"]
-	numpts 				= 	length(nvl2ovl)
-	ovl2nvl 			= 	Array{Int64}(undef,numpts)
-	ovl2nvl[nvl2ovl] 	=   1:numpts
-	symmat 				= 	copy(C["symmat"])
-	symmat 				= 	symmat[ovl2nvl,ovl2nvl]
-	s 					= 	Array{Float64}(undef,symmat)
-	for p 				= 	1:length(s)
-		if symmat[p]	==   0
-			s[p] 		= 	Inf
-		else
-			s[p] 		= 	C["ocg2rad"][symmat[p]]
-		end
-	end
-	return 				s
-end
 
 
 function ceil2grid(M;origin=0,stepsize=1,numsteps=Inf)
