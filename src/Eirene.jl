@@ -6975,72 +6975,6 @@ function roadmapbenchmarks(benchmarkdirectory)
 end
 
 
-##########################################################################################
-
-####	TESTING AND DIAGNOSTICS // SYSTEM LEVEL
-
-##########################################################################################
-
-#=
-
-TOP LEVEL TEST FUNCTIONS
-
-eirenevrVperseusvr()
->> filepath
->> filepath
->> filepath
-eirenevrVeirenepc
-eirenevrVeirenecomplex
-eirenecomplexVhandcalc
->> filepath
->> filepath
->> filepath
-checkparameters
-checkcomplexformats
-eirenevrVeirenesuspendedcomplex(numits)
-
-DATA CONVERSION
-
-checkoffdiagmin(numits)
-checkoffdiagmean(numits)
-checkceil2grid(numits)
-checkminmaxceil(numits)
-
-checksegmentarray(numits)
-checksegVdesegcomplex(numits)
-checkeulervector2dimensionpattern()
-checkdimensionvalues2dimensionpattern(numits)
-checksuspension(numits)
-
-checkbuildcomplex3_diagentries(numits)
-
-checktrueordercanonicalform(numits)
-
-checkloadfile()
->> filepath
->> filepath
->> filepath
->> filepath
->> filepath
-
-SUBROUTINES
-
-generatorbdc
-firstbcdiff
-
-generateperesusbripsdata
-saveperseustestdata
-
-generatehandcalcdata
-savehandcalcdata
-
-generateloadfiledata
-saveloadfiledata
-
-=#
-
-
-
 function checkdv(rv_ag,cp_ag,dv)
 	for p 				=	1:length(cp_ag)-1
 		if 	any(dv[crows(cp_ag,rv_ag,p)].!=(dv[p]-1))
@@ -7078,9 +7012,6 @@ function dimensionvalues2dimensionpattern(dv)
 	dp[end] 		= 	length(dv)+1
 	return dp
 end
-
-
-
 
 #=
 - returns finite values for mingrid and maxgrid

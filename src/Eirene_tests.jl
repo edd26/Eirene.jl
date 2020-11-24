@@ -1,3 +1,69 @@
+##########################################################################################
+
+####	TESTING AND DIAGNOSTICS // SYSTEM LEVEL
+
+##########################################################################################
+
+#=
+
+TOP LEVEL TEST FUNCTIONS
+
+eirenevrVperseusvr()
+>> filepath
+>> filepath
+>> filepath
+eirenevrVeirenepc
+eirenevrVeirenecomplex
+eirenecomplexVhandcalc
+>> filepath
+>> filepath
+>> filepath
+checkparameters
+checkcomplexformats
+eirenevrVeirenesuspendedcomplex(numits)
+
+DATA CONVERSION
+
+checkoffdiagmin(numits)
+checkoffdiagmean(numits)
+checkceil2grid(numits)
+checkminmaxceil(numits)
+
+checksegmentarray(numits)
+checksegVdesegcomplex(numits)
+checkeulervector2dimensionpattern()
+checkdimensionvalues2dimensionpattern(numits)
+checksuspension(numits)
+
+checkbuildcomplex3_diagentries(numits)
+
+checktrueordercanonicalform(numits)
+
+checkloadfile()
+>> filepath
+>> filepath
+>> filepath
+>> filepath
+>> filepath
+
+SUBROUTINES
+
+generatorbdc
+firstbcdiff
+
+generateperesusbripsdata
+saveperseustestdata
+
+generatehandcalcdata
+savehandcalcdata
+
+generateloadfiledata
+saveloadfiledata
+
+=#
+
+
+
 # created 2018-04-15
 function unittest()
 
