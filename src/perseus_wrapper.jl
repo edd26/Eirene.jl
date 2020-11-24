@@ -250,3 +250,87 @@ function barcode_perseus(D;dim=1)
 	end
 end
 
+function saveperseustestdata()
+	E 					= 	generateperseusvrdata()
+	filepath			= 	testfp("prsjd")
+	JLD.save(filepath,"E",E)
+end
+
+
+function generateperseusvrdata()
+	numits 				= 	1
+	ambdim 				= 	40
+	maxdim 				= 	2
+	numsteps 			= 	10000
+	minrad 				= 	0
+	stepsize 			= 	1
+	calibrationdata 	= 	Array{Any}(undef,numits)
+
+	for p 	= 	1:numits
+		numpts 			= 	rand(50:70,1)
+		numpts 			= 	numpts[1]
+		vrmat 			= 	vertexlifemat(	numpts,
+											model 		= 	"rand",
+											scale 		= 	0) # we want zeros on the diagonal
+		vrmat 			= 	ceil2grid(		vrmat*numsteps;
+											origin=minrad,
+											stepsize=stepsize,
+											numsteps=numsteps)
+
+		# birthtimes 		= 	birthtimesraw./2
+
+		D 				=
+		perseusjl(
+		vrmat;			# 	filepaths should end with .txt
+		model			= 	"vr",
+		# rowsare 		= 	"dimensions",
+		datapath		= 	testfp("prsip"),
+		outpath			= 	testfp("prsop"),
+		maxdim 			= 	maxdim,
+		minrad			= 	minrad,
+		stepsz			= 	stepsize,
+		nsteps			= 	numsteps,
+		# pointbirths		= 	birthtimes,
+		perseusfilepath = 	"/Users/gh10/a/c/j/gdc_agora/gdc_a_peresuswrappers/perseusMac"
+		)
+
+		E 				= 	Dict(
+							"perseusdict" 	=>	D,
+							# "pcloud" 		=>	pcloud,
+							"minrad"		=> 	minrad,
+							"stepsize"		=> 	stepsize,
+							"maxdim" 		=>  maxdim,
+							"vrmat"			=>  vrmat)
+
+		calibrationdata[p] 					= 	E
+	end
+	return calibrationdata
+end
+
+
+function ordercanonicalform_4(
+	d;
+	minrad=-Inf,
+	maxrad=Inf,
+	numrad=Inf, # note we have already performed the necessary rounding by this point
+	fastop=true,
+	vscale="diagonal",
+	verbose = verbose)
+
+	# round as necessary
+	if 	minrad 		== 	"minedge"
+		minrad 		= 	minimum(offdiagmin(d))
+	end
+	d 				= 	minmaxceil(d,minrad=minrad,maxrad=maxrad,numrad=numrad)
+	d[d.>maxrad] 	= 	maxrad+1; # we make this reassignment b/c ordercanonicalform_3 takes only arguments with finite entries
+
+	(t,ocg2rad) = ordercanonicalform_3(
+		d;
+		minrad=minrad,
+		maxrad=maxrad,
+		numrad=Inf, # note we have already performed the necessary rounding by this point
+		fastop=fastop,
+		vscale=vscale,
+		verbose = verbose)
+	return t, ocg2rad
+end
