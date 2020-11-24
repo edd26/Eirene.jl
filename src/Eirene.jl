@@ -7573,51 +7573,6 @@ end
  	#	END: this function appears incomplete & is not in use
 ####################################################################################
 
-####################################################################################
- 	#	BEGIN: this function appears incomplete & is not in use
-####################################################################################
-function 	checkrounding(numits,maxdim)
-	for p 	= 	1:numits
-
-		# CHECK MINOFFDIAG
-		# This is important as it is used to determine the value of <minrad> in
-		# calls to <persistf2vr> where keyword argument <minrad> is assigned a
-		# value of "minedge"
-		n 				= 	100
-		x 				= 	rand(n,n)
-		x 				= 	x+x';
-		y 				= 	copy(x)
-		for p 			= 	1:n
-			y[p,p] 		= 	Inf
-		end
-		if 	minimum(y,2) != offdiagmin(x)
-			println("error: please check <offdiagmin>")
-			return
-		end
-
-
-		numpts 		= 	rand(50:60,1)
-		numpts 		= 	numpts[1]
-		numrad 		= 	rand(10:50)
-		numrad 		= 	numrad[1]
-
-		d 			= 	vertexlifemat(numpts,model="rand")
-
-		cutoffs 	= 	(maximum(d)-minimum(d)).*rand(3)+minimum(d)
-		append!(cutoffs,[-Inf, Inf])
-		for 	maxrad 	in 	cutoffs
-			for minrad 	in 	cutoffs
-				Cvr 		= 	eirene(d,maxdim=maxdim,model="vr")
-
-				s 			= 	Cvr["ocg2rad"][C["symmat"]]
-			end
-		end
-	end
-	return ocfcheckfun3() == "passedtest"
-end
-####################################################################################
- 	#	END: this function appears incomplete & is not in use
-####################################################################################
 
 function generatorbdc(C;dim=0)
 	# bdc stands for birth, death, cycle status
