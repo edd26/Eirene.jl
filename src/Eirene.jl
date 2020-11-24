@@ -7079,14 +7079,6 @@ function dimensionvalues2dimensionpattern(dv)
 	return dp
 end
 
-function dimensionpattern2dimensionvalues(dp)
-	nd 				= 	length(dp)-1 # nd stands for number of dimensions
-	dv 				= 	zeros(Int64,dp[end]-1)
-	for sd 			= 	1:nd
-		dv[cran(dp,sd)] 	.= 	sd-1
-	end
-	return dv
-end
 
 
 
