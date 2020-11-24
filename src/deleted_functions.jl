@@ -270,3 +270,10 @@ function NUMRAD2numrad(NUMRAD)
 	end
 	return numrad
 end
+
+
+
+function modit2filepath(model,iteration)
+	suffix 	= 	string("testdata/",model,"/",model,"$(iteration)_input.csv")
+	joinpath(@__DIR__,suffix)
+end
