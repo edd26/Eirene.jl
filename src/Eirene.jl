@@ -7144,27 +7144,6 @@ function truncatearray(N,minrad,maxrad)
 	return 					S
 end
 
-function makegrid(mingrid,maxgrid,numrad)
-	if numrad < 1
-		println("error in <makegrid>: argument numrad must be a positive integer")
-		return
-	end
-	mingrid 		= 	Float64(mingrid)
-	maxgrid 		= 	Float64(maxgrid)
-
-	if numrad 		== 	1
-		grid 		= 	[maxgrid]
-	elseif numrad 	== 	Inf
-		grid 		= 	"all"
-	else
-		grid 		= 	range(mingrid,stop=maxgrid,length=numrad)
-		grid 		= 	Array{Float64}(grid)
-		grid[end] 	= 	maxgrid # this identity might not hold if we did not enforce it, due to numerical imprecision
-	end
-	return grid
-end
-
-
 
 function 	offdiagmin(d::Array{Tv}) where Tv
 	if 	size(d,1) != size(d,2)
