@@ -6129,10 +6129,7 @@ function dimensionvalues2dimensionpattern(dv)
 	return dp
 end
 
-
-
-
-function 	offdiagmin(d::Array{Tv}) where Tv
+function offdiagmin(d::Array{Tv}) where Tv
 	if 	size(d,1) != size(d,2)
 		println()
 		println("error: d should be square")
