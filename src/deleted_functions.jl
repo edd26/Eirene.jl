@@ -1470,3 +1470,23 @@ function skelcount(numvertices,maxsdinality)
 	end
 	return c
 end
+
+function ff2aflight_subr!(
+	columns::UnitRange{Int64},f0faces::Array{Int64,1},f1faces::Array{Int64,1},f2faces::Array{Int64,1},fcfaces::Array{Int64,2},fvscm0::Array{Int64,1},
+	fvscm1::Array{Int64,1},fvscm2::Array{Int64,1},holdi::Array{Int64,1},holdip1::Array{Int64,1},holdj::Array{Int64,1},
+	holdjp1::Array{Int64,1},t1::Array{Int64,1},t2::Array{Int64,1},faces::Array{Int64,2},
+	scm0::Int64,scm1::Int64,scm2::Int64)
+	for fp = 1:length(columns)
+		f0 = columns[fp]
+		f1 = f0faces[f0]
+		f2 = f1faces[f1]
+		updatetranslator!(f0::Int64,fvscm0::Array{Int64,1} ,holdi::Array{Int64,1},holdip1::Array{Int64,1},t1::Array{Int64,1},fvscm1::Array{Int64,1},f1faces::Array{Int64,1})
+		updatetranslator!(f1::Int64,fvscm1::Array{Int64,1},holdj::Array{Int64,1},holdjp1::Array{Int64,1},t2::Array{Int64,1},fvscm2::Array{Int64,1},f2faces::Array{Int64,1})
+		for i = 1:scm2
+			faces[i,fp] = t1[t2[fcfaces[i,f2]]]
+		end
+		faces[scm1,fp] = t1[f2]
+		faces[scm0,fp] = f1
+	end
+end
+
