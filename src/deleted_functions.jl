@@ -601,3 +601,20 @@ function numsimcardlek(A,k)
 	return c
 end
 
+
+function csvimport2linends(M)
+	m,n = size(M)
+	endpoints = zeros(Int64,m)
+	for p = 1:m
+		for q = 1:n
+			if M[p,q] == ""
+				endpoints[p] = q-1
+				break
+			elseif q == n
+				endpoints[p] = n
+			end
+		end
+	end
+	return endpoints
+end
+
