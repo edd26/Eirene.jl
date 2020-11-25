@@ -5590,18 +5590,6 @@ function ec(v,p,k)
 	end
 end
 
-# stands for number of simplicies of cardinality less than or equal to k
-# A is an array of arrays
-# k is an integer
-# this function is not used at the time of this writing (jan 14, 2018)
-function numsimcardlek(A,k)
-	c = 0;
-	for p = 1:k
-		c 	+= length(A[p])
-	end
-	return c
-end
-
 function ezread(s)
 	if s[end-2:end] == "csv"
 		return readdlm(s,',','\r')
