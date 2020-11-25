@@ -845,3 +845,51 @@ function intervalcomplementuniquesortedinput(sortedVecOfUniqueIntegers,intervalE
 end
 
 
+function getstarweights(symmat)
+	m = size(symmat,1)
+	w = zeros(Int64,m)
+	getstartweights_subr2(symmat::Array{Int64,2},w::Array{Int64,1},m::Int64)
+	return w
+end
+
+function getstartweights_subr2(symmat::Array{Int64,2},w::Array{Int64,1},m::Int64)
+	s = copy(symmat)
+	for i = 1:m
+		s[i,i]=0
+	end
+	l = Array{Int64}(undef,m)
+	lDown = Array{Int64}(undef,m)
+	val 		= Array{Array{Int64,1}}(undef,m)
+	supp 		= Array{Array{Int64,1}}(undef,m)
+	suppDown 	= Array{Array{Int64,1}}(undef,m)
+	for i = 1:m
+		supp[i] = findall(!iszero,s[:,i])
+		suppDown[i] = i .+findall(!iszero,s[(i+1):end,i])
+		val[i] = s[supp[i],i]
+		l[i] = length(supp[i])
+		lDown[i] = length(suppDown[i])
+	end
+
+	for i = 1:m
+		Si = supp[i]
+		Vi = val[i]
+		for jp = 1:l[i]
+			j = Si[jp]
+			dij = Vi[jp]
+			Sj = suppDown[j]
+			Vj = val[j]
+			for kp = 1:lDown[j]
+				k = Sj[kp]
+				if k == i
+					continue
+				end
+				dkj = Vj[kp]
+				dki = s[i,k]
+				if dki >= dkj && dij >= dkj
+					w[i]+=1
+				end
+			end
+		end
+	end
+	return w
+end
