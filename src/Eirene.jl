@@ -5700,18 +5700,6 @@ function binom(x,y)
 	return k
 end
 
-function binom_float(x,y)
-	k = 1;
-	a = x
-	b = 1
-	for i = 1:y
-		k = k*a/b
-		a-=1
-		b+=1
-	end
-	return k
-end
-
 function yafterx!(y::Array{Tv,1},x::Array{Tv,1}) where Tv<:Integer
 	for i = 1:length(x)
 		x[i] = y[x[i]]

@@ -564,3 +564,15 @@ function ss2full(rowval,colptr,m,n)
 	return M
 end
 
+function binom_float(x,y)
+	k = 1;
+	a = x
+	b = 1
+	for i = 1:y
+		k = k*a/b
+		a-=1
+		b+=1
+	end
+	return k
+end
+
