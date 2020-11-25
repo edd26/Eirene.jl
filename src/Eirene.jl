@@ -4335,50 +4335,6 @@ function getcyclesize(D::Dict,cyclenumber;dim = 1)
 end
 
 
-function birthtime(C;chain=zeros(Int64,0),dim=1)
-	if isempty(chain)
-		return -Inf
-	else
-		translator 	= 	C["ocg2rad"]
-		sd 	= 	dim+1
-		ocg 		= 	C["grain"][sd] # ocg stands for order-canonical grain
-		return 		empteval(maximum,translator[ocg[chain]],-Inf)
-	end
-end
-
-function deathtime(C;chain=zeros(Int64,0),dim=1)
-	if isempty(chain)
-		return -Inf
-	elseif !isempty(chainboundary(C,chain=chain,dim=dim))
-		return Inf
-	else
-		sd 	= 	dim+1;
-		Lrv 		= 	C["Lrv"][sd+1]
-		Lcp 		= 	C["Lcp"][sd+1]
-		Rrv 		= 	C["Rrv"][sd+1]
-		Rcp 		= 	C["Rcp"][sd+1]
-		numrows 	= 	boundarycorank(C,dim=dim)
-		translator 	= 	zeros(Int64,complexrank(C,dim=dim))
-		translator[C["tid"][sd+1]] = 1:numrows
-		rv 			= 	findall(!iszero,translator[chain])
-		rv 			=  	translator[chain[rv]]
-		cp 			= 	[1,length(rv)+1]
-		rv,cp 	=  	spmmF2silentLeft(Lrv,Lcp,rv,cp,numrows)
-		rv,cp 	=  	spmmF2silentLeft(Rrv,Rcp,rv,cp,numrows)
-		#
-		# recall that plo = the (ordered) subvector consisting of
-		# the first (rank(boundary operator)) elements of tid
-		#
-		if maximum(rv) > length(C["plo"][sd+1])
-			return 		Inf
-		else
-			ocg2rad = 	C["ocg2rad"]
-			grain 	= 	C["grain"][sd+1]
-			names 	= 	C["phi"][sd+1]
-			return 		empteval(maximum,ocg2rad[grain[names[rv]]],-Inf)
-		end
-	end
-end
 
 function chainboundary(C;chain=zeros(Int64,0),dim=1)
 	m 			= 	length(chain)
