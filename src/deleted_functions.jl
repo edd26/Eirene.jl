@@ -545,3 +545,22 @@ function sparsifydesparsifytest(m,n)
 	print("test successful")
 end
 
+function ss2full(rowval,colptr,m)
+# 	renamed from 'showfull' on 12/27/2017; ss stands for 'sparse support'
+	n = length(colptr)-1
+	M = zeros(Int8,m,n)
+	for j = 1:n
+		M[rowval[cran(colptr,j)],j]=1
+	end
+	return M
+end
+
+function ss2full(rowval,colptr,m,n)
+# 	renamed from 'showfull' on 12/27/2017; ss stands for 'sparse support'
+	M = zeros(Int8,m,n)
+	for j = 1:n
+		M[rowval[cran(colptr,j)],j]=1
+	end
+	return M
+end
+
