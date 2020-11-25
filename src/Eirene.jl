@@ -3615,33 +3615,6 @@ end
 
 ##########################################################################################
 
-function intervalcomplementuniquesortedinput(sortedVecOfUniqueIntegers,intervalEndpoint)
-	v = sortedVecOfUniqueIntegers
-	n = intervalEndpoint
-	L = length(v)
-	if L==0
-		return 1:n
-	elseif L==n
-		return Array{Int64}(undef,0)
-	else
-		boundMarker = 1
-		upperBound = v[boundMarker]
-		complement = Array{Int64}(undef,n-L)
-		marker = 0
-		for i = 1:(v[end]-1)
-			if i<upperBound
-				marker+=1
-				complement[marker] = i
-			else
-				boundMarker+=1
-				upperBound = v[boundMarker]
-			end
-		end
-		complement[(marker+1):end]=(v[end]+1):n
-	end
-	return complement
-end
-
 function intervalcomplementuniqueunsortedinput(uniquepositiveintegers,intervalEndpoint)
 	v = uniquepositiveintegers
 	n = intervalEndpoint
