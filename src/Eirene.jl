@@ -2534,16 +2534,6 @@ function copycolind2colind!(rowvalA::Array{Tv,1},colptrA::Array{Tv,1},columnindi
 	end
 end
 
-function extendcolumnlight!(rowval::Array{Ti,1},colptr::Array{Ti,1},v::Array{Ti},k::Ti,growthincrement::Ti) where Ti
-	r = rowval
-	c = colptr
-	startpoint = copy(c[k+1])
-	c[k+1]=c[k]+length(v)
-	if length(r)<c[k+1]-1
-		append!(r,Array{Int64}(undef,max(growthincrement,length(v))))
-	end
-	r[startpoint:(c[k+1]-1)]=v
-end
 
 # colsinorder must be in sorted order
 function supportedmatrix!(Mrowval::Array{Tv},Mcolptr::Array{Tv,1},rows1,colsinorder,Mm::Tv) where Tv<:Integer
