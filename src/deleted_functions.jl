@@ -1240,3 +1240,52 @@ function truncatearray(N,minrad,maxrad)
 	S[S.>maxrad] 	   .= 	Inf
 	return 					S
 end
+
+
+#=
+- returns finite values for mingrid and maxgrid
+- it will always be true that mingrid <= maxgrid
+=#
+function ceil2grid_overflowparameters(	N;
+										minrad 	=	-Inf,
+										maxrad	=	Inf
+										)
+	if (minrad == Inf) || (maxrad == -Inf)
+		mingrid 	= 	0
+		maxgrid 	= 	0
+		return 			minrad,maxrad,mingrid,maxgrid
+	end
+
+	S 								= 	Array{Float64}(copy(N)) #NB it has been verified experimentally that it is VERY important to use the copy function here
+
+	if 	minrad 						== 	"minedge"
+		minrad 						= 	minimum(offdiagmin(S))
+	end
+
+	S[S.<minrad] 				   .= 	minrad
+	S[S.>maxrad] 				   .= 	maxrad
+
+	fi 								= 	findall(isfinite,S)
+	if 									isempty(fi)
+		mingrid 					= 	0
+		maxgrid 					= 	0
+	else
+		# note the case minrad == Inf has already been covered,
+		# as has the case where minimum(S[fi]) might be infinite
+		if minrad 					==	-Inf
+			mingrid 				= 	minimum(S[fi])
+		else
+			mingrid 				= 	minrad
+		end
+		# note the case maxrad == -Inf has already been covered
+		# as has the case where maximum(S[fi]) might not be infinite
+		if maxrad 					== 	Inf
+			maxgrid					= 	maximum(S[fi])
+		else
+			maxgrid					= 	maxrad
+		end
+	end
+
+	return	minrad, maxrad, mingrid, maxgrid
+end
+
