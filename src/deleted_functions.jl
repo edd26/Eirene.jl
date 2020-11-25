@@ -1336,3 +1336,24 @@ function boundarymatrix(C;dim=1,rows="a",cols="a")
 								)
 	return 						rv,cp
 end
+
+
+
+function boundaryrank(C;dim=1)
+	sd 	= 	dim+1;
+	if complexrank(C,dim=dim) == 0
+		return 0
+	else
+		return length(C["plo"][sd])
+	end
+end
+
+function boundarycorank(C;dim=1)
+	sd 	= 	dim+1;
+	if complexrank(C,dim=dim) == 0
+		return 0
+	else
+		return complexrank(C,dim=dim)-boundaryrank(C,dim=dim)
+	end
+end
+

@@ -3833,24 +3833,6 @@ function complexrank(C;dim=1)
 	end
 end
 
-function boundaryrank(C;dim=1)
-	sd 	= 	dim+1;
-	if complexrank(C,dim=dim) == 0
-		return 0
-	else
-		return length(C["plo"][sd])
-	end
-end
-
-function boundarycorank(C;dim=1)
-	sd 	= 	dim+1;
-	if complexrank(C,dim=dim) == 0
-		return 0
-	else
-		return complexrank(C,dim=dim)-boundaryrank(C,dim=dim)
-	end
-end
-
 function empteval(f,a,c)
 	if isempty(a)
 		return c
@@ -3865,53 +3847,6 @@ end
 
 ##########################################################################################
 
-function boundarymatrix(C;dim=1,rows="a",cols="a")
-	crr 					= 	complexrank(C,dim=dim-1)
-	crc 					= 	complexrank(C,dim=dim)
-	if rows == "a"
-		rows 				= 	1:crr#complexrank(C,dim=dim-1)
-	end
-	if cols == "a"
-		cols 				= 	1:crc#complexrank(C,dim=dim)
-	end
-	if empteval(maximum,cols,0) > crc
-		println()
-		println("error: keyword argument <cols> contains an integer greater than the rank of the complex in dimension <dim>")
-		println()
-		return
-	elseif empteval(maximum,rows,0) > crc
-		println()
-		print("error: keyword argument <rows> contains an integer greater than the rank of the complex in dimension <dim-1>")
-		println()
-		return
-	end
-	if isempty(rows) || isempty(cols)
-		rv 					= 	zeros(Int64,0)
-		cp 					= 	ones(Int64,length(cols)+1)
-		return 					rv,cp
-	end
-	ncols 					= 	length(cols)
-	nrows 					= 	length(rows)
-	sd 						= 	dim+1;
-	if haskey(C,"farfaces")
-		rv 					= 	ff2aflight(C,dim+1,cols)
-		rv  				= 	reshape(rv,length(rv))
-		cp  				= 	convert(Array{Int64,1},1:sd:(ncols*sd+1))
-		cols 				= 	1:ncols
-	else
-		rv 					= 	C["rv"][sd]
-		cp 					= 	C["cp"][sd]
-	end
-	rv,dummrv,cp,dummycp 	= 	stackedsubmatrices(
-								rv,
-								cp,
-								rows,
-								Array{Int64}(undef,0),
-								cols,
-								max(empteval(maximum,rows,0),empteval(maximum,rv,0))
-								)
-	return 						rv,cp
-end
 
 function boundarymatrices(C)
 	if haskey(C,"farfaces")
