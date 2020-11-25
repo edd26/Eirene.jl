@@ -4334,22 +4334,6 @@ function getcyclesize(D::Dict,cyclenumber;dim = 1)
 	return rrv
 end
 
-function getrepsize(D::Dict,classnumber;dim=1)
-	sd = dim+2
-	if !haskey(D,"cyclerep")
-		println("This object does not contain data about cycle representatives.")
-		return
-	elseif typeof(classnumber)<: Number
-		return length(D["cyclerep"][dim+2][classnumber])
-	else
-		l = length(classnumber)
-		rsize = Array{Int64}(undef,l)
-		for i = 1:l
-			rsize[i] = length(D["cyclerep"][dim+2][classnumber[i]])
-		end
-		return rsize
-	end
-end
 
 function birthtime(C;chain=zeros(Int64,0),dim=1)
 	if isempty(chain)
