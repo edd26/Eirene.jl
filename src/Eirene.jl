@@ -4582,17 +4582,6 @@ function classrep_vertices(
 	return vertices
 end
 
-function cyclevertices(
-	D::Dict;
-	dim = 1,
-	cycle = 1)
-
-	sd 			= dim+2
-	rep 		= getcycle(D,sd,cycle)
-	vertices 	= incidentverts(D::Dict,sd-1,rep)
-	vertices 	= D["nvl2ovl"][vertices]
-	return vertices
-end
 
 function printval(var,varname)
 	println(string(varname," = $(var)"))
