@@ -5760,20 +5760,6 @@ function full2ss(A)
 	return rv,cp
 end
 
-function sparsifydesparsifytest(m,n)
-# 	added 12/27/2017
-	for p = 1:m
-		A = rand(n,n).<0.1
-		A = convert(Array{Int64},A)
-		rv,cp = full2ss(A)
-		B = ss2full(rv,cp,n)
-		if A != B
-			print("error on iteration $(p)")
-			return A,B
-		end
-	end
-	print("test successful")
-end
 
 function colsupportsum(colptr,n::Integer)
 	x = Array{Int64}(undef,n)
