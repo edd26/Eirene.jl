@@ -2465,14 +2465,6 @@ function crows(colptr::Array,rowval::Array,j)
 	return rowval[cran(colptr,j)]
 end
 
-function findcol(cp,k)
-	i = 1
-	while cp[i]<=k
-		i+=1
-	end
-	return i-1
-end
-
 function extend!(x::Array{Tv,1},n::Integer) where Tv
 	if length(x)<n
 		append!(x,Array{Tv}(undef,n-length(x)))

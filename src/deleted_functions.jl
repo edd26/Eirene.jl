@@ -1392,3 +1392,11 @@ function extendcolumnlight!(rowval::Array{Ti,1},colptr::Array{Ti,1},v::Array{Ti}
 	r[startpoint:(c[k+1]-1)]=v
 end
 
+function findcol(cp,k)
+	i = 1
+	while cp[i]<=k
+		i+=1
+	end
+	return i-1
+end
+
