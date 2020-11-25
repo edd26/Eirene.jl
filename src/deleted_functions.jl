@@ -990,3 +990,80 @@ function ordercanonicalform(
 end
 
 
+# Under development as of 12/30/2017
+#
+# function 	graduate(
+# 			A;
+# 			minval		=	minimum(A),
+# 			maxval		= 	Inf,
+# 			numval		= 	Inf,
+# 			stepsize	= 	[],
+# 			privatemax	= 	Inf)
+#
+# 	if numval == 1
+# 		return ones(Int64,size(A)...),minimum(A)
+# 	end
+#
+# 	#	Note that maxval and numval cannot both be specified by the user
+# 	if stepsize 	= 	[]
+# 			alpha	=	(maxval-minval)/(numval-1)
+# 		end
+# 	else
+# 		alpha 		= 	stepsize
+# 		if  (maxval 	== 	Inf) 	||	(numval == [])
+# 			numval	= 	Inf
+# 		else
+# 			maxval 	= 	minval+(numval-1)*alpha
+# 		end
+# 	end
+#
+# 	p 						= sortperm(vec(A))
+#
+# 	# Compute the ocf
+# 	val						= minval
+# 	ocg2rad 				= Array{Float64}(undef,size(A,1)*size(A,2)) #the plus 1 covers values taken from the diagonal
+# 	ocg2rad[1]				= val
+# 	post 					= 1
+# 	exceededmax 			= false
+# 	ocf						= fill(-1,m,m) #will reverse the order on this after it's been filled
+# 	stepcounter = 1
+# 	for i = 1:length(p)
+# 		if A[p[i]] <= val
+# 			ocf[p[i]] = post
+# 		else
+# 			if numval == Inf
+# 				val = A[p[i]]
+# 			else
+# 				if A[p[i]] == Inf
+# 					val = Inf
+# 				else
+# 					while A[p[i]] > val
+# 						stepcounter+=1
+# 						if stepcounter == numval
+# 							val = maxval # must take this rather cumbersome final step b/c of numerical error, since o/w it can and does happen that the (numval)th grain value fails to equal maxval
+# 						else
+# 							val+=alpha
+# 						end
+# 					end
+# 				end
+# 			end
+# 			post+=1
+# 			ocf[p[i]] 		= post
+# 			ocg2rad[post]	= val
+# 		end
+# 		if val > privatemax
+# 			ocf[p[i:end]] 	= post
+# 			exceededmax		= true
+# 			break
+# 		end
+# 	end
+# 	if exceededmax
+# 		cutoff = post
+# 	else
+# 		cutoff = post+1
+# 	end
+# 	deleteat!(ocg2rad,cutoff:length(ocg2rad))
+# 	ocg2rad = reverse(ocg2rad,dims=1)
+# 	ocf = cutoff - ocf
+# end
+
