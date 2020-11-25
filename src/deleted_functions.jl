@@ -1417,3 +1417,22 @@ function nvaltest(m,n)
 	print("test successful")
 end
 
+
+function addcol!(
+	oddfloods::BitArray{1},shoreline::Array{Int64,1},watermark::Int64,
+	peakcounter::Array{Int64,1},Acp::Array{Int64,1},Arv::Array{Int64,1},
+	flippedlist::Array{Int64,1},j::Int64)
+	for i = cran(Acp,j)
+		ii = Arv[i]
+		if shoreline[ii] != watermark
+			peakcounter[1]+=1
+			flippedlist[peakcounter]=ii
+			shoreline[ii] = watermark
+			oddfloods[ii] = true
+		else
+			oddfloods[ii] = !oddfloods[ii]
+		end
+	end
+end
+
+
