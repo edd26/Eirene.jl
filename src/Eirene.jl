@@ -271,29 +271,6 @@ function buildallfromclose(lrowval,lcolptr,lclosefaces,hrowval,hcolptr,selectedc
 	return hclosefaces
 end
 
-function buildclosefaces!(lrowval,lcolptr,lclosefaces,lfarfaces,hrowval,hcolptr,destinationmatrix;verbose = false)
-	m = length(hcolptr)-1
-	n = length(hrowval)
-	rowdepth = size(lclosefaces,1)
-	sd = rowdepth+1
-	rosettacol = Array{Int64}(undef,maximum(lrowval))
-	for i = 1:m
-		rosettacol[lrowval[cran(lcolptr,i)]]=cran(lcolptr,i)
-		for j = cran(hcolptr,i)
-			farface = hrowval[j]
-			for k = 1:rowdepth
-				destinationmatrix[k,j]=rosettacol[lclosefaces[farface]]
-			end
-			destinationmatrix[sd,j] = rosettacol[lrowval[farface]]
-		end
-	end
-	for j = 1:n
-		for i = 1:sd
-			lclosefaces[i,j]=destinationmatrix[i,j]
-		end
-	end
-end
-
 function buildclosefromfar(farfaces,firstv,sd)
 	m = length(firstv[1])-1
 	n = length(farfaces[sd])
