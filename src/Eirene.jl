@@ -2977,14 +2977,6 @@ function latlon2euc(A;model = "pc")
 	return vcat(x,y,z)
 end
 
-function worldexample()
-	a = readdlm("/Users/greghenselman/Desktop/citylonglat.csv",',',Float64,'\r')
-	d = latlon2sphere(a')
-	x = JLD.load("/Users/greghenselman/JuliaFiles/citysample3_copy.jld")
-	supp = x["supp"]
-	C = eirene(d[:,supp];model = "pc",maxdim=1,upperlim = 0.25,record="cyclerep")
-	return a,d,supp,C
-end
 
 function zerodrandmat(n)
 	# input: 	an integer n
