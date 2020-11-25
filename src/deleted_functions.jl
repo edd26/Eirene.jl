@@ -1234,3 +1234,9 @@ function ordercanonicalform_3(
 end
 
 
+function truncatearray(N,minrad,maxrad)
+	S 					= 	copy(N) #NB it has been verified experimentally that it is VERY important to use the copy function here
+	S[S.<minrad] 	   .= 	minrad
+	S[S.>maxrad] 	   .= 	Inf
+	return 					S
+end
