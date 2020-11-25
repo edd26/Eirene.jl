@@ -576,3 +576,16 @@ function binom_float(x,y)
 	return k
 end
 
+function undercat(X)
+	l = length(X);
+	if l <= 1
+		return X
+	else
+		m = l+l-1;
+		Y = Array{Any}(undef,m)
+		Y[2:2:m] = "_"
+		Y[1:2:m] = X
+		return string(Y...)
+	end
+end
+
