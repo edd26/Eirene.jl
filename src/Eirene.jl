@@ -2156,34 +2156,6 @@ function spmmF2(Arowval::Array{Tv,1},Acolptr::Array{Tv,1},Browval::Array{Tv,1},B
 	return rowvalC, colptrC
 end
 
-function spmmF2_testfun()
-	N 			=	1000; 	# matrix dimension
-	n 			= 	100;  	# number of samples
-	for p = 1:n
-		m1 	=	sprand(N,N,0.01); 	rv1 =	m1.rowval;  	cp1 =	m1.colptr;
-		m2 	=	sprand(N,N,0.01);	rv2 =	m2.rowval;		cp2 =	m2.colptr;
-		if !isempty(rv1)
-			m1m2 		= ceil.(Int64,m1)*ceil.(Int64,m2)
-			m1m2 		= mod.(m1m2,2)
-			qrv 		= m1m2.rowval;
-			qcp 		= m1m2.colptr;
-			prv,pcp 	= spmmF2(rv1,cp1,rv2,cp2,maximum(rv1))
-			for q 	= 	1:N
-				if crows(qcp,qrv,q) != sort(crows(pcp,prv,q))
-					print("error 1: please see spmmF2_testfun")
-					return
-				end
-			end
-		end
-		prv,pcp 	= 	spmmF2(zeros(Int64,0),ones(Int64,N+1),rv2,cp2,1)
-		if (prv 	!=	zeros(Int64,0)) || (pcp != ones(Int64,N+1))
-			print("error 2: please see spmmF2_testfun")
-			return
-		end
-	end
-	print("test complete - no errors detected")
-end
-
 function spmmF2silentLeft(Arowval::Array{Tv,1},Acolptr::Array{Tv,1},Browval::Array{Tv,1},Bcolptr::Array{Tv,1},Am) where Tv<:Integer
     mA = Am
     nB = length(Bcolptr)-1
