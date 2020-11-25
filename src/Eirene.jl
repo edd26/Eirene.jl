@@ -716,14 +716,6 @@ end
 
 ##########################################################################################
 
-function cellcount(C)
-	c = 0
-	for i = 1:length(C["grain"])
-		c+= length(C["grain"][i])
-	end
-	return c
-end
-
 function ocff2of(grain::Array{Int64},ocg2rad::Array{Float64})
 	m = length(grain)
 	filt = Array{Float64}(undef,m)
@@ -741,20 +733,13 @@ function ocff2of(grain::Array{Array{Int64,1},1},ocg2rad::Array{Float64})
 	end
 	return filt
 end
-
-function floatgrain(C)
-	grain = convert(Array{Array{Int64}},C["grain"])
-	ocg2rad = C["ocg2rad"]
-	return ocff2of(grain,ocg2rad)
-end
-
 ##########################################################################################
 
 ####	SCHUR COMPLEMENTS
 
 ##########################################################################################
 
-function 	schurit4!(	Mrv,Mcp,Mm,Mn,Mn0,
+function schurit4!(	Mrv,Mcp,Mm,Mn,Mn0,
 						rowlab,collab,
 						Jprows,Jpcols,numjunpairs,
 						Sprows,Spcols,numsenpairs,

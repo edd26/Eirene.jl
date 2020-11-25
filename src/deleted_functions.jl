@@ -1436,3 +1436,18 @@ function addcol!(
 end
 
 
+function cellcount(C)
+	c = 0
+	for i = 1:length(C["grain"])
+		c+= length(C["grain"][i])
+	end
+	return c
+end
+
+
+function floatgrain(C)
+	grain = convert(Array{Array{Int64}},C["grain"])
+	ocg2rad = C["ocg2rad"]
+	return ocff2of(grain,ocg2rad)
+end
+
