@@ -2440,23 +2440,6 @@ function nval(colptr,J)
 	return c
 end
 
-#	added 12/27/2017
-function nvaltest(m,n)
-	for p = 1:m
-		a = rand(n,n).<0.1
-		a = convert(Array{Int64},a)
-		rv,cp = full2ss(a)
-		J1 = rand(1:n,5)
-		J2 = minimum(J1):maximum(J1)
-		if nval(cp,J1)!=count(!iszero,a[:,J1])
-			print("error"); return a,cp,J1
-		elseif nval(cp,J2)!=count(!iszero,a[:,J2])
-			print("error"); return a,cp,J2
-		end
-	end
-	print("test successful")
-end
-
 function crows(A::SparseMatrixCSC,j)
 	return A.rowval[cran(A,j)]
 end
