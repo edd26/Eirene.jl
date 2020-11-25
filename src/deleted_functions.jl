@@ -698,3 +698,14 @@ function deathtime(C;chain=zeros(Int64,0),dim=1)
 	end
 end
 
+function chainboundary(C;chain=zeros(Int64,0),dim=1)
+	m 			= 	length(chain)
+	if m == 0
+		return zeros(Int64,0)
+	end
+	crv 		= 	convert(Array{Int64,1},1:m);
+	ccp 		= 	[1,m+1]
+	brv,bcp 	= 	boundarymatrix(C,dim=dim,cols=chain)
+	brv,bcp 	= 	spmmF2(brv,bcp,crv,ccp,empteval(maximum,brv,0))
+	return 			brv
+end
