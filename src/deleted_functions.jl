@@ -1067,3 +1067,170 @@ end
 # 	ocf = cutoff - ocf
 # end
 
+# NB: Assumes that the input array S has only finite entries.
+# NB: The value for keyword <numrad> must be either a positive integer or Inf
+function ordercanonicalform_3(
+	S::Array{Tv};
+	maxrad=Inf,
+	minrad=-Inf,
+	numrad=Inf,
+	vscale="default",
+	fastop::Bool=true,
+	verbose::Bool=false) where Tv
+
+    if size(S,1) == 0
+    	ocf 		= 	zeros(Int64,0,0)
+    	ocg2rad		= 	zeros(Float64,0)
+    	return ocf,ocg2rad
+    end
+
+    # Format input
+    symmat		= convert(Array{Float64},copy(S))
+	m 			= size(symmat,1)
+
+	if vscale == "default"
+		for i = 1:m
+			symmat[i,i] = minimum(symmat[:,i])
+		end
+	elseif typeof(vscale) <: Array
+		vscale = convert(Array{Float64},copy(vscale))
+		if length(vscale) != m
+			print("Error: keyword <vscale> must take a value of <defualt>, <diagonal>, or <v>, where v is a vector of length equal to the number of vertices in the complex.")
+			return
+		end
+		for i=1:m
+			if offdiagmin(symmat,i) < vscale[i]
+				print("Error: the \"birth time\" assigned a vertex by keyword argument <vscale> may be no greater than that of any incident edge.  The value assigned to vertex $(i) by <vscale> is $(vscale[i]), and i is incident to an edge with birth time $(offdiagmin(symmat,i)).")
+				return
+			else
+				symmat[i,i] = vscale[i]
+			end
+		end
+	elseif vscale 	== 	"diagonal"
+		vscale		=	Array{Float64,1}(m)
+		for i=1:m
+			vscale[i]	=	symmat[i,i]
+		end
+		# the following is in prnciple unnecessary, but it simplifies rounding
+		for i=1:m
+			if offdiagmin(symmat,i) < vscale[i]
+				print("Error: the \"birth time\" assigned a vertex by keyword argument <vscale> may be no greater than that of any incident edge.  The value assigned to vertex $(i) by <vscale> is $(vscale[i]), and i is incident to an edge with birth time $(offdiagmin(symmat,i)).")
+				return
+			end
+		end
+	end
+
+	# Deterime the public maxrad
+	if maxrad == Inf
+		publicmax = maximum(symmat)
+	else
+		publicmax 	= copy(maxrad)
+	end
+
+	# Deterime the public minrad
+	publicmin	= minimum(symmat)
+	publicmin	= max(publicmin,minrad)
+
+	# It's important that this precede the other cases
+	if publicmax < publicmin
+		return zeros(Int64,m,m),Array{Float64}(undef,0)
+	end
+
+	# This covers all remaining cases where numrad ==1
+	if numrad == 1
+		privatemax = minimum(maximum(symmat,1))
+		ocf = zeros(Int64,m,m)
+		if fastop && publicmax >= privatemax
+			index = findfirst(maximum(symmat,1),privatemax)
+			ocf[index,:]=1
+			ocf[:,index]=1
+			for i = 1:m
+				ocf[i,i]=1
+			end
+		else
+			ocf[symmat.<=publicmax]=1
+		end
+		return ocf,[publicmax]
+	end
+
+	# If necessary, determine step size.  Recall we have already treated every case where numrad == 1.
+	if numrad < Inf
+		alpha 		= (publicmax-publicmin)/(numrad-1)
+	elseif numrad == Inf
+		alpha 		= Inf
+	end
+
+	# If one stops early, determine when to stop
+	if fastop
+		privatemax = minimum(maximum(symmat,1))
+		privatemax = min(privatemax,publicmax)
+		if numrad < Inf
+			post = publicmin
+			stepcounter = 1
+			while post < privatemax
+				stepcounter+=1
+				if stepcounter == numrad
+					post = publicmax # must take this rather cumbersome step on account of numerical error.
+				else
+					post+=alpha
+				end
+			end
+			privatemax = post
+		end
+	else
+		privatemax = publicmax
+	end
+
+	# Extract sortperm
+	p 						= sortperm(vec(symmat),alg=MergeSort)
+
+	# Compute the ocf
+	val						= publicmin
+	ocg2rad 				= Array{Float64}(undef,binom(m,2)+m) #the plus 1 covers values taken from the diagonal
+	ocg2rad[1]				= val
+	post 					= 1
+	exceededmax 			= false
+	ocf						= fill(-1,m,m) #will reverse the order on this after it's been filled
+	stepcounter = 1
+	for i = 1:length(p)
+		if symmat[p[i]] <= val
+			ocf[p[i]] = post
+		else
+			if numrad == Inf
+				val = symmat[p[i]]
+			else
+				if symmat[p[i]] == Inf
+					val = Inf
+				else
+					while symmat[p[i]] > val
+						stepcounter+=1
+						if stepcounter == numrad
+							val = publicmax # must take this rather cumbersome final step b/c of numerical error, since o/w it can and does happen that the (numrad)th grain value fails to equal publicmax
+						else
+							val+=alpha
+						end
+					end
+				end
+			end
+			post+=1
+			ocf[p[i]] 		= post
+			ocg2rad[post]	= val
+		end
+		if val > privatemax
+			ocf[p[i:end]] 	= post
+			exceededmax		= true
+			break
+		end
+	end
+	if exceededmax
+		cutoff = post
+	else
+		cutoff = post+1
+	end
+	deleteat!(ocg2rad,cutoff:length(ocg2rad))
+	ocg2rad = reverse(ocg2rad,dims=1)
+	ocf = cutoff - ocf
+	return ocf,ocg2rad # additional outputs for diagnostic purposes -> #,privatemax,S,maxrad,publicmax,publicmin,maxrad
+end
+
+
