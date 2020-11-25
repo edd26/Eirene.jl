@@ -787,3 +787,32 @@ function nnzbars_test()
 		end
 	end
 end
+
+
+function integersinsameorderbycolumn(v::Array{Int64,1},maxradue::Int64,colptr)
+	# Returns a permutation z on {1,...,length(v)} so that
+	# (a) cran(colptr,j) maps to cran(colptr,j) for all j, and
+	# (b) crows(colptr,v[z],j) is an array in sorted order
+	numcols = length(colptr)-1
+	m = length(v)
+	x = Array{Int64}(undef,maxradue)
+	y = Array{Int64}(undef,maxradue+1)
+	z = Array{Int64}(undef,length(v))
+	for j = 1:numcols
+		x[:] .= 0
+		for i = colptr[j]:(colptr[j+1]-1)
+			x[v[i]]+=1
+		end
+		y[1] = colptr[j]
+		for i = 1:maxradue
+			y[i+1]=y[i]+x[i]
+		end
+		for i = colptr[j]:(colptr[j+1]-1)
+			u = v[i]
+			z[i] = y[u]
+			y[u]+=1
+		end
+	end
+	return z
+end
+

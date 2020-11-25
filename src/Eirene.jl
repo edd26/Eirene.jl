@@ -3748,32 +3748,6 @@ function integersinsameorder!(v::Array{Int64,1})
 end
 
 
-function integersinsameorderbycolumn(v::Array{Int64,1},maxradue::Int64,colptr)
-	# Returns a permutation z on {1,...,length(v)} so that
-	# (a) cran(colptr,j) maps to cran(colptr,j) for all j, and
-	# (b) crows(colptr,v[z],j) is an array in sorted order
-	numcols = length(colptr)-1
-	m = length(v)
-	x = Array{Int64}(undef,maxradue)
-	y = Array{Int64}(undef,maxradue+1)
-	z = Array{Int64}(undef,length(v))
-	for j = 1:numcols
-		x[:] .= 0
-		for i = colptr[j]:(colptr[j+1]-1)
-			x[v[i]]+=1
-		end
-		y[1] = colptr[j]
-		for i = 1:maxradue
-			y[i+1]=y[i]+x[i]
-		end
-		for i = colptr[j]:(colptr[j+1]-1)
-			u = v[i]
-			z[i] = y[u]
-			y[u]+=1
-		end
-	end
-	return z
-end
 
 #=
 - 	In beta; should be compared with integersinsameorderbycolumn3.  See
@@ -4010,15 +3984,6 @@ function nnzbars(D::Dict;dim = 1)
 	return counter
 end
 
-function nnzbars_test()
-	for p = 1:20
-		C 	= 	eirene(rand(20,50),model="pc",maxdim=2)
-		cr 	= 	C["cyclerep"]
-		for q 	=	1:3
-
-		end
-	end
-end
 
 function barname2cyclename(D::Dict,barnumber = [1];dim = 1)
 	if typeof(barnumber) <: Array
