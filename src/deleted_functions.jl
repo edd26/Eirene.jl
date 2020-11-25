@@ -777,3 +777,13 @@ function getcyclesize(D::Dict,cyclenumber;dim = 1)
 	return rrv
 end
 
+
+function nnzbars_test()
+	for p = 1:20
+		C 	= 	eirene(rand(20,50),model="pc",maxdim=2)
+		cr 	= 	C["cyclerep"]
+		for q 	=	1:3
+
+		end
+	end
+end
