@@ -2383,34 +2383,6 @@ function cran(colptr::Array,J::UnitRange{Int64})
 	return v
 end
 
-#	added 12/27/2017
-function testcran(m,n)
-	for p = 1:m
-		a = rand(n,n).<0.1
-		a = convert(Array{Int64},a)
-		J1= rand(1:n,5)
-		J2= minimum(J1):maximum(J1)
-		v1= []
-		v2= []
-		for q in J1
-			k = count(!iszero,a[:,1:(q-1)])
-			d = count(!iszero,a[:,q])
-			append!(v1,k+1:k+d)
-		end
-		for q in J2
-			k = count(!iszero,a[:,1:(q-1)])
-			d = count(!iszero,a[:,q])
-			append!(v2,k+1:k+d)
-		end
-		rv,cp = full2ss(a)
-		if v1 != cran(cp,J1)
-			print("error at J1"); return a,v1,J1
-		elseif v2 != cran(cp,J2)
-			print("error at J2"); return a,v1,J2
-		end
-	end
-	print("test successful")
-end
 
 function cran(colptr::UnitRange,j)
 	return colptr[j]
