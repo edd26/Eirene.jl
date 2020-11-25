@@ -4334,9 +4334,6 @@ function getcyclesize(D::Dict,cyclenumber;dim = 1)
 	return rrv
 end
 
-
-
-
 function numcols(cp)
 	return length(cp)-1
 end
