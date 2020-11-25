@@ -680,17 +680,6 @@ function filteredmatrixfromfarfaces(
 	return Mrv,Mcp,lowlab,higlab,Mm
 end
 
-function getmaxdim(farfaces)
-	l = length(farfaces)
-	maxdim = l
-	for i = 1:l
-		if length(farfaces[i]) == 0
-			maxdim = i
-			break
-		end
-	end
-	return maxdim
-end
 
 function grain2maxsd(grain)
 	c = 0
@@ -698,14 +687,6 @@ function grain2maxsd(grain)
 		if !isempty(grain[i])
 			c = i
 		end
-	end
-	return c
-end
-
-function skelcount(numvertices,maxsdinality)
-	c = 0
-	for i = 1:maxsdinality
-		c += binom(numvertices,i)
 	end
 	return c
 end

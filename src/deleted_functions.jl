@@ -1451,3 +1451,22 @@ function floatgrain(C)
 	return ocff2of(grain,ocg2rad)
 end
 
+function getmaxdim(farfaces)
+	l = length(farfaces)
+	maxdim = l
+	for i = 1:l
+		if length(farfaces[i]) == 0
+			maxdim = i
+			break
+		end
+	end
+	return maxdim
+end
+
+function skelcount(numvertices,maxsdinality)
+	c = 0
+	for i = 1:maxsdinality
+		c += binom(numvertices,i)
+	end
+	return c
+end
