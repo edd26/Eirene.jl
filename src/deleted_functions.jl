@@ -1357,3 +1357,17 @@ function boundarycorank(C;dim=1)
 	end
 end
 
+function crosscheckceil2grid(A,ran)
+	B 		= 	ceil2grid(A,ran)
+	for j 	= 	1:length(A)
+		q 	= 	findfirst(ran.>A[j])
+		val = 	ran[q]
+		if B[j] 	!= 	val
+			println()
+			println("error: please check <checkceil2grid>")
+			return false
+		end
+	end
+	return true
+end
+
