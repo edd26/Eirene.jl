@@ -618,3 +618,7 @@ function csvimport2linends(M)
 	return endpoints
 end
 
+function printsize(var,varname)
+	println(string("size(",varname,") = ",size(var)))
+end
+

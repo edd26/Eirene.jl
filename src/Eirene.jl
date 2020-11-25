@@ -4594,10 +4594,6 @@ function cyclevertices(
 	return vertices
 end
 
-function printsize(var,varname)
-	println(string("size(",varname,") = ",size(var)))
-end
-
 function printval(var,varname)
 	println(string(varname," = $(var)"))
 end
