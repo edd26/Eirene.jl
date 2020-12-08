@@ -487,6 +487,7 @@ function ff2aflight_scgt3(farfaces,firstv,sd,columns)
 	return faces
 end
 
+# hdlip1 is always used with value 2- maybe better make it local or with default value?
 function updatetranslator!(f0,firstv0,holdi,holdip1,t,firstv1,farfaces1)
 	if firstv0[holdip1[1]] <= f0
 		while firstv0[holdip1[1]]<= f0
@@ -3957,6 +3958,7 @@ function classrep_pjs(
 	classvinnewspace = incidentverts(D,sd-1,rep)
 	classvinoldspace = D["nvl2ovl"][classvinnewspace]
 	if showcloud == true
+        # subselect farfaces?
 		vsupp = trues(length(D["farfaces"][1]))
 		vsupp[classvinnewspace] .= false
 		compvinnewspace = findall(vsupp)
