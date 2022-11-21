@@ -39,7 +39,7 @@ using Distances
 using FileIO
 using Blink
 using PlotlyJS
-using MultivariateStats
+# using MultivariateStats
 using Colors
 using SparseArrays
 using LinearAlgebra
