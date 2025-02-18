@@ -1480,7 +1480,7 @@ end
 
 # possible values for toprow: dp, dv, ev
 function cscfilepath2unsegmentedfilteredcomplex(fp;toprow="dp")
-	M 				= 	CSV.read(fp,header=0,silencewarnings=true)
+	M 				= 	CSV.read(fp,DataFrame,header=0,silencewarnings=true)
 	nemo 			=	Array{Any}(M[:,1])
 
 	#	a zero operator // empty complex, formatted by [dv, ev]
